@@ -15,13 +15,13 @@
     - 配置开发环境代理，将 API 请求转发到 `http://localhost:8080`
     - _需求: 1.1, 1.2, 1.8_
 
-  - [ ] 1.2 实现 Preload 安全桥接脚本
+  - [x] 1.2 实现 Preload 安全桥接脚本
     - 创建 `src/preload/preload.ts`，通过 `contextBridge` 暴露 `ElectronBridge` 接口
     - 暴露 `clipboard.copyPassword`、`autoLock.onLockTriggered`、`autoLock.reportActivity`、`dialog.showSaveDialog`、`dialog.showOpenDialog` 通道
     - 禁止暴露 Node.js API 或文件系统接口
     - _需求: 1.3, 1.4, 11.7_
 
-  - [ ] 1.3 实现 API Client 统一封装
+  - [x] 1.3 实现 API Client 统一封装
     - 创建 `src/renderer/api/api-client.ts`，实现 `ApiClient` 接口
     - 实现统一的 `request<T>` 方法：解析 `ApiResponse<T>` 格式，code=0 返回 data，code≠0 抛出 `ApiError`
     - 实现 401 响应拦截：清除 Session Token，触发锁定
