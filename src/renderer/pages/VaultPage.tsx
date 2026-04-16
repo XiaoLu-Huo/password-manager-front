@@ -5,7 +5,9 @@ import { useLoading } from '../context/LoadingContext';
 import SearchBar from '../components/SearchBar';
 import TagFilter from '../components/TagFilter';
 import CredentialCard from '../components/CredentialCard';
+import { colors, primaryBtnStyle, secondaryBtnStyle } from '../theme';
 import type { CredentialListResponse } from '../types';
+import { AuthExpiredError } from '../types';
 
 const VaultPage: React.FC = () => {
   const navigate = useNavigate();
@@ -30,7 +32,6 @@ const VaultPage: React.FC = () => {
       const data = await apiClient.get<CredentialListResponse[]>(path);
       setCredentials(data);
 
-      // Extract unique tags from all credentials for the filter
       if (!keyword && !tag) {
         const tags = new Set<string>();
         data.forEach((c) => {
@@ -39,6 +40,9 @@ const VaultPage: React.FC = () => {
         setAllTags(Array.from(tags).sort());
       }
     } catch (err: unknown) {
+      // AuthExpiredError is handled by the global 401 interceptor (auto-lock + redirect)
+      // so we only show retry for genuine network/server errors
+      if (err instanceof AuthExpiredError) return;
       setError(err instanceof Error ? err.message : '获取凭证列表失败');
     } finally {
       hideLoading();
@@ -61,21 +65,8 @@ const VaultPage: React.FC = () => {
   return (
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
-        <h1 style={{ fontSize: 22, margin: 0 }}>密码库</h1>
-        <button
-          type="button"
-          onClick={() => navigate('/vault/new')}
-          style={{
-            padding: '8px 16px',
-            fontSize: 14,
-            fontWeight: 600,
-            color: '#fff',
-            backgroundColor: '#1a73e8',
-            border: 'none',
-            borderRadius: 6,
-            cursor: 'pointer',
-          }}
-        >
+        <h1 style={{ fontSize: 22, margin: 0, color: colors.textPrimary }}>密码库</h1>
+        <button type="button" onClick={() => navigate('/vault/new')} style={primaryBtnStyle}>
           + 新建凭证
         </button>
       </div>
@@ -86,28 +77,18 @@ const VaultPage: React.FC = () => {
       </div>
 
       {error && (
-        <div style={{ textAlign: 'center', padding: 24 }}>
-          <p role="alert" style={{ color: '#d93025', fontSize: 14, marginBottom: 12 }}>{error}</p>
-          <button
-            type="button"
-            onClick={() => fetchCredentials()}
-            style={{
-              padding: '8px 16px',
-              fontSize: 14,
-              color: '#1a73e8',
-              backgroundColor: '#fff',
-              border: '1px solid #1a73e8',
-              borderRadius: 6,
-              cursor: 'pointer',
-            }}
-          >
-            重试
-          </button>
+        <div style={{ textAlign: 'center', padding: 32, backgroundColor: colors.cardBg, borderRadius: 12, border: `1px solid ${colors.border}` }}>
+          <p role="alert" style={{ color: colors.danger, fontSize: 14, marginBottom: 12 }}>{error}</p>
+          <button type="button" onClick={() => fetchCredentials()} style={secondaryBtnStyle}>重试</button>
         </div>
       )}
 
       {!error && credentials.length === 0 && (
-        <p style={{ textAlign: 'center', color: '#5f6368', padding: 24 }}>暂无凭证</p>
+        <div style={{ textAlign: 'center', padding: 48, backgroundColor: colors.cardBg, borderRadius: 12, border: `1px solid ${colors.border}` }}>
+          <p style={{ fontSize: 32, margin: '0 0 8px' }}>🔑</p>
+          <p style={{ color: colors.textSecondary, fontSize: 15, margin: '0 0 16px' }}>暂无凭证</p>
+          <button type="button" onClick={() => navigate('/vault/new')} style={primaryBtnStyle}>创建第一个凭证</button>
+        </div>
       )}
 
       {!error && credentials.length > 0 && (

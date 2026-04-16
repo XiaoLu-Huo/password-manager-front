@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { inputStyle as baseInputStyle, primaryBtnStyle } from '../theme';
 
 export interface SearchBarProps {
   onSearch: (keyword: string) => void;
@@ -16,9 +17,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch, placeholder = '搜索�
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setKeyword(value);
-    if (value === '') {
-      onSearch('');
-    }
+    if (value === '') onSearch('');
   };
 
   return (
@@ -29,30 +28,9 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch, placeholder = '搜索�
         onChange={handleChange}
         placeholder={placeholder}
         aria-label={placeholder}
-        style={{
-          flex: 1,
-          padding: '8px 12px',
-          fontSize: 14,
-          border: '1px solid #dadce0',
-          borderRadius: 6,
-          outline: 'none',
-          boxSizing: 'border-box',
-        }}
+        style={{ ...baseInputStyle, flex: 1 }}
       />
-      <button
-        type="submit"
-        style={{
-          padding: '8px 16px',
-          fontSize: 14,
-          color: '#fff',
-          backgroundColor: '#1a73e8',
-          border: 'none',
-          borderRadius: 6,
-          cursor: 'pointer',
-        }}
-      >
-        搜索
-      </button>
+      <button type="submit" style={{ ...primaryBtnStyle, whiteSpace: 'nowrap' }}>搜索</button>
     </form>
   );
 };

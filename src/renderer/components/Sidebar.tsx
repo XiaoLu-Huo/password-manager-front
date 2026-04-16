@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { colors } from '../theme';
 
 interface NavItem {
   to: string;
@@ -19,19 +20,19 @@ const navItems: NavItem[] = [
 const linkStyle: React.CSSProperties = {
   display: 'flex',
   alignItems: 'center',
-  gap: 8,
-  padding: '10px 16px',
+  gap: 10,
+  padding: '11px 16px',
   textDecoration: 'none',
-  color: '#333',
-  borderRadius: 6,
+  color: colors.textSecondary,
+  borderRadius: 8,
   margin: '2px 8px',
   fontSize: 14,
-  transition: 'background-color 0.15s',
+  transition: 'background-color 0.15s, color 0.15s',
 };
 
 const activeLinkStyle: React.CSSProperties = {
-  backgroundColor: '#e8f0fe',
-  color: '#1a73e8',
+  backgroundColor: colors.accentSubtle,
+  color: colors.accent,
   fontWeight: 600,
 };
 
@@ -49,7 +50,8 @@ const Sidebar: React.FC = () => {
       style={{
         width: 220,
         flexShrink: 0,
-        borderRight: '1px solid #e0e0e0',
+        backgroundColor: colors.sidebarBg,
+        borderRight: `1px solid ${colors.border}`,
         padding: '16px 0',
         boxSizing: 'border-box',
         display: 'flex',
@@ -58,6 +60,10 @@ const Sidebar: React.FC = () => {
       }}
       aria-label="主导航"
     >
+      <div style={{ padding: '8px 16px 20px', fontSize: 18, fontWeight: 700, color: colors.textPrimary, letterSpacing: 0.5 }}>
+        🔐 密码管理器
+      </div>
+
       <div style={{ flex: 1 }}>
         {navItems.map((item) => (
           <NavLink
@@ -80,13 +86,13 @@ const Sidebar: React.FC = () => {
           style={{
             display: 'flex',
             alignItems: 'center',
-            gap: 8,
+            gap: 10,
             width: '100%',
-            padding: '10px 16px',
+            padding: '11px 16px',
             border: 'none',
-            borderRadius: 6,
+            borderRadius: 8,
             backgroundColor: 'transparent',
-            color: '#d93025',
+            color: colors.danger,
             fontSize: 14,
             cursor: 'pointer',
             textAlign: 'left',

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { colors } from '../theme';
 
 export interface PasswordInputProps {
   value: string;
@@ -28,10 +29,12 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
           aria-describedby={error ? 'password-input-error' : undefined}
           style={{
             width: '100%',
-            padding: '10px 40px 10px 12px',
+            padding: '10px 40px 10px 14px',
             fontSize: 14,
-            border: `1px solid ${error ? '#d93025' : '#dadce0'}`,
-            borderRadius: 6,
+            color: colors.textPrimary,
+            backgroundColor: colors.inputBg,
+            border: `1px solid ${error ? colors.danger : colors.border}`,
+            borderRadius: 8,
             outline: 'none',
             boxSizing: 'border-box',
           }}
@@ -49,18 +52,14 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
             fontSize: 18,
             padding: 4,
             lineHeight: 1,
-            color: '#5f6368',
+            color: colors.textSecondary,
           }}
         >
           {visible ? '🙈' : '👁️'}
         </button>
       </div>
       {error && (
-        <p
-          id="password-input-error"
-          role="alert"
-          style={{ color: '#d93025', fontSize: 12, margin: '4px 0 0 0' }}
-        >
+        <p id="password-input-error" role="alert" style={{ color: colors.danger, fontSize: 12, margin: '4px 0 0 0' }}>
           {error}
         </p>
       )}
