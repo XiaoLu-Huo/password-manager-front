@@ -180,6 +180,7 @@ const PasswordHistoryPanel: React.FC<{ credentialId: number }> = ({ credentialId
   const [history, setHistory] = useState<PasswordHistoryResponse[]>([]);
   const [loading, setLoading] = useState(true);
   const [revealedMap, setRevealedMap] = useState<Record<number, string>>({});
+  const [copiedId, setCopiedId] = useState<number | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -192,14 +193,12 @@ const PasswordHistoryPanel: React.FC<{ credentialId: number }> = ({ credentialId
 
   const handleReveal = async (historyId: number) => {
     if (revealedMap[historyId]) {
-      // Toggle hide
       setRevealedMap((m) => { const copy = { ...m }; delete copy[historyId]; return copy; });
       return;
     }
     try {
       const plaintext = await apiClient.post<string>(`/credentials/${credentialId}/password-history/${historyId}/reveal`);
       setRevealedMap((m) => ({ ...m, [historyId]: plaintext }));
-      // Auto-mask after 30 seconds
       setTimeout(() => {
         setRevealedMap((m) => { const copy = { ...m }; delete copy[historyId]; return copy; });
       }, 30_000);
@@ -212,10 +211,14 @@ const PasswordHistoryPanel: React.FC<{ credentialId: number }> = ({ credentialId
       try {
         if (window.electronBridge?.clipboard) {
           await window.electronBridge.clipboard.copyPassword(plaintext);
+          setCopiedId(historyId);
+          setTimeout(() => setCopiedId(null), 1500);
           return;
         }
       } catch { /* fall through */ }
       await navigator.clipboard.writeText(plaintext);
+      setCopiedId(historyId);
+      setTimeout(() => setCopiedId(null), 1500);
     } catch { /* silently fail */ }
   };
 
@@ -239,7 +242,9 @@ const PasswordHistoryPanel: React.FC<{ credentialId: number }> = ({ credentialId
           <button type="button" onClick={() => handleReveal(h.id)} style={smallBtnStyle}>
             {revealedMap[h.id] ? '隐藏' : '显示'}
           </button>
-          <button type="button" onClick={() => handleCopy(h.id)} style={smallBtnStyle}>复制</button>
+          <button type="button" onClick={() => handleCopy(h.id)} style={{ ...smallBtnStyle, color: copiedId === h.id ? colors.success : colors.textPrimary }}>
+            {copiedId === h.id ? '已复制 ✓' : '复制'}
+          </button>
         </div>
       ))}
     </div>
