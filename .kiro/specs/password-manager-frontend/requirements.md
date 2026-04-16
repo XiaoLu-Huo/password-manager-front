@@ -26,17 +26,17 @@
 
 效果图包含以下 9 个页面设计：
 
-| 编号 | 页面名称 | 对应需求 | 关键 UI 要素 |
-|------|---------|---------|-------------|
-| 1 | Create Master Password | 需求 2 | 密码输入框 + 确认输入框、密码强度条（weak/medium/strong）、"至少12字符"和"3种字符类型"校验提示、Create 按钮、"MFA setup will follow"提示 |
-| 2 | Unlock Vault | 需求 2 | 主密码输入框、MFA Verification Code 输入框、Show/Hide Password 切换、锁定警告（"Locked for 2% after 5 incorrect attempts"）、Unlock 按钮、Use Recovery Code 链接 |
-| 3 | Vault Overview | 需求 3 | 顶部搜索栏 + New Item 按钮、标签筛选栏（All/Favorites/Work/Reams/Events/Dons...）、凭证卡片网格（Account Name/Username/URL + 操作图标）、底部分页器 |
-| 4 | Password Generator | 需求 6 | Default/Custom 标签切换、Length 滑块（8-128，默认20）、Uppercase/Lowercase/Numbers/Special Characters 勾选框、Generate Password 按钮、生成结果展示 + 强度标签（Strong）、Save Custom Rule 按钮 |
-| 5 | Add New Item | 需求 5 | Account Name*/Username*/Password* 必填字段、Generate Password 按钮、URL/Notes/Category 可选字段、Save 按钮、"Created: Just now"时间戳 |
-| 6 | Item Details | 需求 4, 7 | 账户图标 + 名称 + 用户名、密码掩码显示 + Show/Copy 按钮 + "Masks in 30s"倒计时、Password History (Last 10) 表格（Masked Password/Changed On/Copy/View 列） |
-| 7 | Security Report | 需求 8 | 四个统计卡片（Total Items/Weak Passwords/Reused Passwords/Old Passwords >90 days）、密码列表 + 强度条（颜色编码）+ 90-day alert 标签 |
-| 8 | Settings | 需求 10 | Auto-Lock 下拉（15 mins）、MFA 开关（On/Off）、TOTP QR Code 展示 + Recovery Code 链接、Change Master Password 入口、Custom Password Rules 入口、Save 按钮 |
-| 9 | Import/Export | 需求 9 | Export Data 区域（Export Encrypted Excel 按钮 + Set Encryption Password 输入框）、Import Data 区域（Upload Excel File 拖拽区 + Format Error 提示 + Conflict Handling 单选：Overwrite/Skip/Keep Both） |
+| 编号 | 页面名称　　　　　　　 |     | 关键 UI 要素　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　|
+| ------| ------------------------| -----| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 1　　| Create Master Password |     | 密码输入框 + 确认输入框、密码强度条（weak/medium/strong）、"至少12字符"和"3种字符类型"校验提示、Create 按钮、"MFA setup will follow"提示　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　|
+| 2　　| Unlock Vault　　　　　 |     | 主密码输入框、MFA Verification Code 输入框、Show/Hide Password 切换、锁定警告（"Locked for 2% after 5 incorrect attempts"）、Unlock 按钮、Use Recovery Code 链接　　　　　　　　　　　　　　　　　　　|
+| 3　　| Vault Overview　　　　 |     | 顶部搜索栏 + New Item 按钮、标签筛选栏（All/Favorites/Work/Reams/Events/Dons...）、凭证卡片网格（Account Name/Username/URL + 操作图标）、底部分页器　　　　　　　　　　　　　　　　　　　　　　　　　 |
+| 4　　| Password Generator　　 |     | Default/Custom 标签切换、Length 滑块（8-128，默认20）、Uppercase/Lowercase/Numbers/Special Characters 勾选框、Generate Password 按钮、生成结果展示 + 强度标签（Strong）、Save Custom Rule 按钮　　　　|
+| 5　　| Add New Item　　　　　 |     | Account Name*/Username*/Password* 必填字段、Generate Password 按钮、URL/Notes/Category 可选字段、Save 按钮、"Created: Just now"时间戳　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　 |
+| 6　　| Item Details　　　　　 |     | 账户图标 + 名称 + 用户名、密码掩码显示 + Show/Copy 按钮 + "Masks in 30s"倒计时、Password History (Last 10) 表格（Masked Password/Changed On/Copy/View 列）　　　　　　　　　　　　　　　　　　　　　　|
+| 7　　| Security Report　　　　|     | 四个统计卡片（Total Items/Weak Passwords/Reused Passwords/Old Passwords >90 days）、密码列表 + 强度条（颜色编码）+ 90-day alert 标签　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　|
+| 8　　| Settings　　　　　　　 |     | Auto-Lock 下拉（15 mins）、MFA 开关（On/Off）、TOTP QR Code 展示 + Recovery Code 链接、Change Master Password 入口、Custom Password Rules 入口、Save 按钮　　　　　　　　　　　　　　　　　　　　　　 |
+| 9　　| Import/Export　　　　　|     | Export Data 区域（Export Encrypted Excel 按钮 + Set Encryption Password 输入框）、Import Data 区域（Upload Excel File 拖拽区 + Format Error 提示 + Conflict Handling 单选：Overwrite/Skip/Keep Both） |
 
 ## 需求
 

@@ -51,7 +51,7 @@
     - _需求: 1.1, 1.3_
 
 - [ ] 2. 实现状态管理与路由框架
-  - [ ] 2.1 实现认证状态管理（AuthContext）
+  - [x] 2.1 实现认证状态管理（AuthContext）
     - 创建 `src/renderer/context/AuthContext.tsx`
     - 实现 `AuthState`（isUnlocked、sessionToken、mfaRequired）和 `AuthAction` reducer
     - 提供 `useAuth` Hook 供组件使用
