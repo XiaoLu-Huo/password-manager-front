@@ -34,7 +34,7 @@ const CredentialDetailPage: React.FC = () => {
     }
     if (strengthTimerRef.current) clearTimeout(strengthTimerRef.current);
     strengthTimerRef.current = setTimeout(() => {
-      apiClient.post<PasswordStrengthResponse>('/password-generator/evaluate', form.password)
+      apiClient.post<PasswordStrengthResponse>('/password-generator/evaluate', { password: form.password })
         .then((res) => setPasswordStrength(res.strengthLevel))
         .catch(() => {});
     }, 400);
