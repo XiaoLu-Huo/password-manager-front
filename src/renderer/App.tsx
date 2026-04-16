@@ -82,7 +82,9 @@ const SetupRedirect: React.FC = () => {
         if (!cancelled) setNeedsSetup(false);
       })
       .finally(() => {
-        if (!cancelled) hideLoading();
+        // Always hide loading regardless of cancelled — otherwise the
+        // spinner stays visible after Navigate unmounts this component.
+        hideLoading();
       });
     return () => { cancelled = true; };
   }, [showLoading, hideLoading]);
