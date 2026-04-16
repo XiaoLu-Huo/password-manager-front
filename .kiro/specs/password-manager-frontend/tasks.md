@@ -45,7 +45,7 @@
     - 验证已解锁状态下请求头包含有效 Session Token，未解锁状态下不携带 Token
     - **验证需求: 1.7**
 
-  - [ ] 1.7 实现 Electron 主进程入口
+  - [x] 1.7 实现 Electron 主进程入口
     - 创建 `src/main/main.ts`，配置 BrowserWindow、加载 preload 脚本
     - 配置安全选项：`nodeIntegration: false`、`contextIsolation: true`
     - _需求: 1.1, 1.3_
