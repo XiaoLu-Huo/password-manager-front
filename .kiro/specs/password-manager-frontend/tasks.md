@@ -57,7 +57,7 @@
     - 提供 `useAuth` Hook 供组件使用
     - _需求: 2.6, 12.3_
 
-  - [ ] 2.2 实现路由配置与路由守卫
+  - [x] 2.2 实现路由配置与路由守卫
     - 创建 `src/renderer/App.tsx`，配置 React Router 路由表
     - 实现 `AppLayout` 组件（侧边栏 + 内容区 Outlet）
     - 实现路由守卫：锁定状态重定向到 `/unlock`（或 `/setup`），401 响应自动跳转
