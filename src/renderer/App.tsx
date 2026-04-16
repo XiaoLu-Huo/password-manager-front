@@ -14,10 +14,11 @@ import { apiClient } from './api/api-client';
 import AppLayout from './components/AppLayout';
 import LoadingSpinner from './components/LoadingSpinner';
 
+import SetupPage from './pages/SetupPage';
+import UnlockPage from './pages/UnlockPage';
+
 // ---- Placeholder pages (replaced by real implementations in later tasks) ----
 
-const SetupPage: React.FC = () => <div>SetupPage</div>;
-const UnlockPage: React.FC = () => <div>UnlockPage</div>;
 const VaultPage: React.FC = () => <div>VaultPage</div>;
 const CredentialDetailPage: React.FC = () => <div>CredentialDetailPage</div>;
 const CreateCredentialPage: React.FC = () => <div>CreateCredentialPage</div>;

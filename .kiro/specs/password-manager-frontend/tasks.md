@@ -78,11 +78,11 @@
     - 创建全局加载指示器组件，在页面加载和 API 请求期间显示
     - _需求: 12.5_
 
-- [ ] 3. 检查点 - 确保基础框架测试通过
+- [x] 3. 检查点 - 确保基础框架测试通过
   - 确保所有测试通过，如有问题请向用户确认。
 
-- [ ] 4. 实现认证相关页面（对应后端 Task 13.2）
-  - [ ] 4.1 实现 PasswordInput 组件
+- [x] 4. 实现认证相关页面（对应后端 Task 13.2）
+  - [x] 4.1 实现 PasswordInput 组件
     - 创建 `src/renderer/components/PasswordInput.tsx`
     - 支持掩码/明文切换（眼睛图标）
     - 接收 `PasswordInputProps` 接口属性
@@ -93,7 +93,7 @@
     - 生成随机密码字符串，验证掩码模式不显示原始字符，明文模式显示原始字符串，再次切换恢复掩码
     - **验证需求: 2.10**
 
-  - [ ] 4.3 实现 SetupPage（首次设置主密码）
+  - [x] 4.3 实现 SetupPage（首次设置主密码）
     - 创建 `src/renderer/pages/SetupPage.tsx`
     - 包含密码输入框、确认输入框、提交按钮
     - 实现密码确认不一致验证，在确认框下方显示错误提示
@@ -105,7 +105,7 @@
     - 生成随机字符串对，验证不同时返回失败提示，相同时验证通过
     - **验证需求: 2.3**
 
-  - [ ] 4.5 实现 UnlockPage（解锁页面）
+  - [x] 4.5 实现 UnlockPage（解锁页面）
     - 创建 `src/renderer/pages/UnlockPage.tsx`
     - 包含主密码输入框和解锁按钮
     - 调用 `POST /api/auth/unlock`，成功后保存 Session Token 并跳转到 VaultPage
