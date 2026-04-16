@@ -22,12 +22,15 @@ const VaultPage: React.FC = () => {
     showLoading();
     setError('');
     try {
-      let path = '/credentials';
-      const params = new URLSearchParams();
-      if (keyword) params.set('keyword', keyword);
-      if (tag) params.set('tag', tag);
-      const qs = params.toString();
-      if (qs) path += `?${qs}`;
+      let path: string;
+      if (keyword) {
+        // Backend has a dedicated search endpoint
+        path = `/credentials/search?keyword=${encodeURIComponent(keyword)}`;
+      } else if (tag) {
+        path = `/credentials?tag=${encodeURIComponent(tag)}`;
+      } else {
+        path = '/credentials';
+      }
 
       const data = await apiClient.get<CredentialListResponse[]>(path);
       setCredentials(data);

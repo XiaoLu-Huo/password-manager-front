@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { apiClient } from '../api/api-client';
 import { useLoading } from '../context/LoadingContext';
 import PasswordField from '../components/PasswordField';
+import CopyableText from '../components/CopyableText';
 import ConfirmDialog from '../components/ConfirmDialog';
 import { colors, cardStyle, inputStyle, labelStyle, primaryBtnStyle, secondaryBtnStyle, dangerBtnStyle, linkBtnStyle, errorStyle } from '../theme';
 import type { CredentialResponse, UpdateCredentialRequest, GeneratedPasswordResponse, PasswordHistoryResponse } from '../types';
@@ -90,13 +91,21 @@ const CredentialDetailPage: React.FC = () => {
         {!editing ? (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
             <DetailRow label="账户名称" value={credential.accountName} />
-            <DetailRow label="用户名" value={credential.username} />
+            <div>
+              <label style={labelStyle}>用户名</label>
+              <CopyableText text={credential.username} />
+            </div>
             <div>
               <label style={labelStyle}>密码</label>
               <PasswordField credentialId={credential.id} maskedPassword={credential.maskedPassword} />
               <p style={{ fontSize: 11, color: colors.textMuted, margin: '4px 0 0' }}>显示后 30 秒自动掩码</p>
             </div>
-            {credential.url && <DetailRow label="URL" value={credential.url} />}
+            {credential.url && (
+              <div>
+                <label style={labelStyle}>URL</label>
+                <CopyableText text={credential.url} />
+              </div>
+            )}
             {credential.notes && <DetailRow label="备注" value={credential.notes} />}
             {credential.tags && <DetailRow label="标签" value={credential.tags} />}
             <div style={{ display: 'flex', gap: 12 }}>
@@ -170,6 +179,7 @@ const FormField: React.FC<{ label: string; value: string; onChange: (v: string) 
 const PasswordHistoryPanel: React.FC<{ credentialId: number }> = ({ credentialId }) => {
   const [history, setHistory] = useState<PasswordHistoryResponse[]>([]);
   const [loading, setLoading] = useState(true);
+  const [revealedMap, setRevealedMap] = useState<Record<number, string>>({});
 
   useEffect(() => {
     let cancelled = false;
@@ -180,16 +190,56 @@ const PasswordHistoryPanel: React.FC<{ credentialId: number }> = ({ credentialId
     return () => { cancelled = true; };
   }, [credentialId]);
 
+  const handleReveal = async (historyId: number) => {
+    if (revealedMap[historyId]) {
+      // Toggle hide
+      setRevealedMap((m) => { const copy = { ...m }; delete copy[historyId]; return copy; });
+      return;
+    }
+    try {
+      const plaintext = await apiClient.post<string>(`/credentials/${credentialId}/password-history/${historyId}/reveal`);
+      setRevealedMap((m) => ({ ...m, [historyId]: plaintext }));
+      // Auto-mask after 30 seconds
+      setTimeout(() => {
+        setRevealedMap((m) => { const copy = { ...m }; delete copy[historyId]; return copy; });
+      }, 30_000);
+    } catch { /* silently fail */ }
+  };
+
+  const handleCopy = async (historyId: number) => {
+    try {
+      const plaintext = revealedMap[historyId] || await apiClient.post<string>(`/credentials/${credentialId}/password-history/${historyId}/reveal`);
+      try {
+        if (window.electronBridge?.clipboard) {
+          await window.electronBridge.clipboard.copyPassword(plaintext);
+          return;
+        }
+      } catch { /* fall through */ }
+      await navigator.clipboard.writeText(plaintext);
+    } catch { /* silently fail */ }
+  };
+
   if (loading) return <p style={{ fontSize: 13, color: colors.textMuted }}>加载中...</p>;
   if (history.length === 0) return <p style={{ fontSize: 13, color: colors.textMuted }}>暂无密码变更记录</p>;
+
+  const smallBtnStyle: React.CSSProperties = {
+    padding: '2px 8px', fontSize: 12, border: `1px solid ${colors.border}`, borderRadius: 4,
+    backgroundColor: colors.cardBg, color: colors.textPrimary, cursor: 'pointer',
+  };
 
   return (
     <div style={{ border: `1px solid ${colors.border}`, borderRadius: 8, padding: 12, backgroundColor: colors.pageBg }}>
       <h3 style={{ fontSize: 14, margin: '0 0 8px', color: colors.textPrimary }}>密码历史（最近 10 条）</h3>
       {history.map((h) => (
-        <div key={h.id} style={{ display: 'flex', justifyContent: 'space-between', padding: '6px 0', borderBottom: `1px solid ${colors.border}`, fontSize: 13 }}>
-          <span style={{ fontFamily: 'monospace', color: colors.textPrimary }}>{h.maskedPassword}</span>
-          <span style={{ color: colors.textMuted }}>{h.changedAt}</span>
+        <div key={h.id} style={{ display: 'flex', alignItems: 'center', padding: '6px 0', borderBottom: `1px solid ${colors.border}`, fontSize: 13, gap: 8 }}>
+          <span style={{ fontFamily: 'monospace', color: colors.textPrimary, flex: 1 }}>
+            {revealedMap[h.id] || h.maskedPassword}
+          </span>
+          <span style={{ color: colors.textMuted, whiteSpace: 'nowrap' }}>{h.changedAt}</span>
+          <button type="button" onClick={() => handleReveal(h.id)} style={smallBtnStyle}>
+            {revealedMap[h.id] ? '隐藏' : '显示'}
+          </button>
+          <button type="button" onClick={() => handleCopy(h.id)} style={smallBtnStyle}>复制</button>
         </div>
       ))}
     </div>
