@@ -14,6 +14,15 @@ const SetupPage: React.FC = () => {
   const [confirmError, setConfirmError] = useState('');
   const [apiError, setApiError] = useState('');
 
+  // Password complexity checks (match backend: ≥12 chars, ≥3 character types)
+  const hasMinLength = password.length >= 12;
+  const hasUpper = /[A-Z]/.test(password);
+  const hasLower = /[a-z]/.test(password);
+  const hasDigit = /\d/.test(password);
+  const hasSpecial = /[^A-Za-z0-9]/.test(password);
+  const typesCount = [hasUpper, hasLower, hasDigit, hasSpecial].filter(Boolean).length;
+  const hasEnoughTypes = typesCount >= 3;
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setApiError('');
@@ -69,6 +78,17 @@ const SetupPage: React.FC = () => {
           onChange={setPassword}
           placeholder="输入主密码"
         />
+
+        {password.length > 0 && (
+          <ul style={{ margin: 0, padding: '0 0 0 20px', fontSize: 12, listStyle: 'none' }}>
+            <li style={{ color: hasMinLength ? '#34a853' : '#5f6368' }}>
+              {hasMinLength ? '✓' : '○'} 至少 12 个字符
+            </li>
+            <li style={{ color: hasEnoughTypes ? '#34a853' : '#5f6368' }}>
+              {hasEnoughTypes ? '✓' : '○'} 包含以下至少三种：大写字母、小写字母、数字、特殊字符
+            </li>
+          </ul>
+        )}
 
         <PasswordInput
           value={confirmPassword}
