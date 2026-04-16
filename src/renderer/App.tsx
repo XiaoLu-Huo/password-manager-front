@@ -19,10 +19,9 @@ import UnlockPage from './pages/UnlockPage';
 import VaultPage from './pages/VaultPage';
 import CredentialDetailPage from './pages/CredentialDetailPage';
 import CreateCredentialPage from './pages/CreateCredentialPage';
+import PasswordGeneratorPage from './pages/PasswordGeneratorPage';
 
 // ---- Placeholder pages (replaced by real implementations in later tasks) ----
-
-const PasswordGeneratorPage: React.FC = () => <div>PasswordGeneratorPage</div>;
 const SecurityReportPage: React.FC = () => <div>SecurityReportPage</div>;
 const ImportExportPage: React.FC = () => <div>ImportExportPage</div>;
 const SettingsPage: React.FC = () => <div>SettingsPage</div>;

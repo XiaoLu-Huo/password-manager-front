@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { apiClient } from '../api/api-client';
 import { useLoading } from '../context/LoadingContext';
+import { PasswordStrengthLevel } from '../types/api';
 import PasswordField from '../components/PasswordField';
 import CopyableText from '../components/CopyableText';
 import ConfirmDialog from '../components/ConfirmDialog';
+import StrengthIndicator from '../components/StrengthIndicator';
 import { colors, cardStyle, inputStyle, labelStyle, primaryBtnStyle, secondaryBtnStyle, dangerBtnStyle, linkBtnStyle, errorStyle } from '../theme';
-import type { CredentialResponse, UpdateCredentialRequest, GeneratedPasswordResponse, PasswordHistoryResponse } from '../types';
+import type { CredentialResponse, UpdateCredentialRequest, GeneratedPasswordResponse, PasswordHistoryResponse, PasswordStrengthResponse } from '../types';
 
 const CredentialDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -20,6 +22,23 @@ const CredentialDetailPage: React.FC = () => {
   const [error, setError] = useState('');
 
   const [form, setForm] = useState({ accountName: '', username: '', password: '', url: '', notes: '', tags: '' });
+  const [passwordStrength, setPasswordStrength] = useState<PasswordStrengthLevel | null>(null);
+  const strengthTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Debounced password strength evaluation
+  useEffect(() => {
+    if (!form.password) {
+      setPasswordStrength(null);
+      return;
+    }
+    if (strengthTimerRef.current) clearTimeout(strengthTimerRef.current);
+    strengthTimerRef.current = setTimeout(() => {
+      apiClient.post<PasswordStrengthResponse>('/password-generator/evaluate', form.password)
+        .then((res) => setPasswordStrength(res.strengthLevel))
+        .catch(() => {});
+    }, 400);
+    return () => { if (strengthTimerRef.current) clearTimeout(strengthTimerRef.current); };
+  }, [form.password]);
 
   useEffect(() => {
     if (!id) return;
@@ -133,6 +152,11 @@ const CredentialDetailPage: React.FC = () => {
                 <input type="text" value={form.password} onChange={(e) => setForm((f) => ({ ...f, password: e.target.value }))} placeholder="输入新密码" style={{ ...inputStyle, flex: 1 }} />
                 <button type="button" onClick={handleGeneratePassword} style={secondaryBtnStyle}>🔄 生成</button>
               </div>
+              {passwordStrength && (
+                <div style={{ marginTop: 8 }}>
+                  <StrengthIndicator level={passwordStrength} />
+                </div>
+              )}
             </div>
             <FormField label="URL" value={form.url} onChange={(v) => setForm((f) => ({ ...f, url: v }))} />
             <div>

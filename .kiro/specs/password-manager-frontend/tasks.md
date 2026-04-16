@@ -184,11 +184,11 @@
     - 生成随机表单数据，验证必填字段为空时阻止提交并显示错误，非空时通过
     - **验证需求: 5.4**
 
-- [ ] 6. 检查点 - 确保凭证管理模块测试通过
+- [x] 6. 检查点 - 确保凭证管理模块测试通过
   - 确保所有测试通过，如有问题请向用户确认。
 
-- [ ] 7. 实现密码生成器页面（对应后端 Task 13.4）
-  - [ ] 7.1 实现 StrengthIndicator 组件
+- [x] 7. 实现密码生成器页面（对应后端 Task 13.4）
+  - [x] 7.1 实现 StrengthIndicator 组件
     - 创建 `src/renderer/components/StrengthIndicator.tsx`
     - 根据强度等级（WEAK/MEDIUM/STRONG）显示对应颜色（红/黄/绿）和文字标签
     - _需求: 6.4_
@@ -198,7 +198,7 @@
     - 生成随机强度等级，验证颜色和文字标签正确映射
     - **验证需求: 6.4**
 
-  - [ ] 7.3 实现 PasswordGeneratorPage
+  - [x] 7.3 实现 PasswordGeneratorPage
     - 创建 `src/renderer/pages/PasswordGeneratorPage.tsx`
     - 实现"默认规则"/"自定义规则"模式切换
     - 自定义模式：密码长度滑块（8-128）、大写/小写/数字/特殊字符开关
