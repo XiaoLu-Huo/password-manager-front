@@ -28,3 +28,17 @@ export class AuthExpiredError extends Error {
     this.name = 'AuthExpiredError';
   }
 }
+
+// ---- Enums ----
+
+export enum PasswordStrengthLevel {
+  WEAK = 'WEAK',
+  MEDIUM = 'MEDIUM',
+  STRONG = 'STRONG',
+}
+
+export enum ConflictStrategy {
+  OVERWRITE = 'OVERWRITE',
+  SKIP = 'SKIP',
+  KEEP_BOTH = 'KEEP_BOTH',
+}

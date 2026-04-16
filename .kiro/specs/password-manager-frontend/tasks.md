@@ -29,7 +29,7 @@
     - 实现请求头自动携带 Session Token
     - _需求: 1.5, 1.6, 1.7_
 
-  - [ ] 1.4 定义 TypeScript 数据模型
+  - [x] 1.4 定义 TypeScript 数据模型
     - 创建 `src/renderer/types/` 目录，定义所有 TypeScript 接口（映射后端 DTO）
     - 包含：`ApiResponse<T>`、认证相关、凭证相关、密码生成器、密码历史、安全报告、导入导出、设置
     - 定义自定义错误类型：`ApiError`、`NetworkError`、`AuthExpiredError`
