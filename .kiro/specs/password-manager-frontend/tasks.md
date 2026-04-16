@@ -292,7 +292,7 @@
     - 验证锁定事件后 Renderer 清除 Session Token 和已解密凭证数据，导航到 UnlockPage
     - **验证需求: 11.5, 11.6**
 
-- [ ] 10. 检查点 - 确保 Electron 桌面应用所有模块测试通过
+- [x] 10. 检查点 - 确保 Electron 桌面应用所有模块测试通过
   - 确保所有测试通过，如有问题请向用户确认。
 
 - [ ] 11. 搭建 Chrome Extension 浏览器插件（对应后端 Task 14.1）

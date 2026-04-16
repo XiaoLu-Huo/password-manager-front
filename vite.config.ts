@@ -24,4 +24,13 @@ export default defineConfig({
       },
     },
   },
+  test: {
+    globals: false,
+    environment: 'jsdom',
+    include: ['src/**/__tests__/**/*.test.ts', 'src/**/__tests__/**/*.test.tsx'],
+    environmentMatchGlobs: [
+      // Main process tests run in Node, not jsdom
+      ['src/main/**', 'node'],
+    ],
+  },
 });
