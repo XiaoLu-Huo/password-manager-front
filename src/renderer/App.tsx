@@ -8,8 +8,11 @@ import {
   Outlet,
 } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { LoadingProvider } from './context/LoadingContext';
+import { useLoading } from './context/LoadingContext';
 import { apiClient } from './api/api-client';
 import AppLayout from './components/AppLayout';
+import LoadingSpinner from './components/LoadingSpinner';
 
 // ---- Placeholder pages (replaced by real implementations in later tasks) ----
 
@@ -64,23 +67,26 @@ const PublicRoute: React.FC<{ children: React.ReactElement }> = ({ children }) =
  */
 const SetupRedirect: React.FC = () => {
   const [needsSetup, setNeedsSetup] = useState<boolean | null>(null);
+  const { showLoading, hideLoading } = useLoading();
 
   useEffect(() => {
     let cancelled = false;
+    showLoading();
     apiClient
       .get<boolean>('/auth/status')
       .then((initialized) => {
         if (!cancelled) setNeedsSetup(!initialized);
       })
       .catch(() => {
-        // If the status endpoint fails, default to showing unlock page
         if (!cancelled) setNeedsSetup(false);
+      })
+      .finally(() => {
+        if (!cancelled) hideLoading();
       });
     return () => { cancelled = true; };
-  }, []);
+  }, [showLoading, hideLoading]);
 
   if (needsSetup === null) {
-    // Still loading – show nothing (LoadingSpinner will be added in task 2.5)
     return null;
   }
 
@@ -136,7 +142,10 @@ const App: React.FC = () => {
   return (
     <HashRouter>
       <AuthProvider>
-        <AppRoutes />
+        <LoadingProvider>
+          <LoadingSpinner />
+          <AppRoutes />
+        </LoadingProvider>
       </AuthProvider>
     </HashRouter>
   );
