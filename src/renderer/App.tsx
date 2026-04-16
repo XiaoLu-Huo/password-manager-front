@@ -16,12 +16,12 @@ import LoadingSpinner from './components/LoadingSpinner';
 
 import SetupPage from './pages/SetupPage';
 import UnlockPage from './pages/UnlockPage';
+import VaultPage from './pages/VaultPage';
+import CredentialDetailPage from './pages/CredentialDetailPage';
+import CreateCredentialPage from './pages/CreateCredentialPage';
 
 // ---- Placeholder pages (replaced by real implementations in later tasks) ----
 
-const VaultPage: React.FC = () => <div>VaultPage</div>;
-const CredentialDetailPage: React.FC = () => <div>CredentialDetailPage</div>;
-const CreateCredentialPage: React.FC = () => <div>CreateCredentialPage</div>;
 const PasswordGeneratorPage: React.FC = () => <div>PasswordGeneratorPage</div>;
 const SecurityReportPage: React.FC = () => <div>SecurityReportPage</div>;
 const ImportExportPage: React.FC = () => <div>ImportExportPage</div>;

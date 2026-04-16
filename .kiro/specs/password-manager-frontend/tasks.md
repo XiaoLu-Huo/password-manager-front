@@ -119,19 +119,19 @@
     - 生成随机错误响应（code≠0）和网络错误，验证 UI 展示对应错误信息
     - **验证需求: 2.9, 3.8, 5.6, 9.8, 14.4**
 
-- [ ] 5. 实现凭证管理页面（对应后端 Task 13.3）
-  - [ ] 5.1 实现 SearchBar 和 TagFilter 组件
+- [x] 5. 实现凭证管理页面（对应后端 Task 13.3）
+  - [x] 5.1 实现 SearchBar 和 TagFilter 组件
     - 创建 `src/renderer/components/SearchBar.tsx` 和 `src/renderer/components/TagFilter.tsx`
     - SearchBar 支持关键词输入触发搜索
     - TagFilter 展示标签列表，支持点击筛选
     - _需求: 3.2, 3.4_
 
-  - [ ] 5.2 实现 CredentialCard 和 ConfirmDialog 组件
+  - [x] 5.2 实现 CredentialCard 和 ConfirmDialog 组件
     - 创建 `src/renderer/components/CredentialCard.tsx`，展示凭证摘要（账户名、用户名、URL）
     - 创建 `src/renderer/components/ConfirmDialog.tsx`，支持确认/取消操作
     - _需求: 3.1, 4.8_
 
-  - [ ] 5.3 实现 VaultPage（凭证列表主页）
+  - [x] 5.3 实现 VaultPage（凭证列表主页）
     - 创建 `src/renderer/pages/VaultPage.tsx`
     - 调用 `GET /api/credentials` 获取凭证列表，以卡片形式展示
     - 集成 SearchBar（调用搜索 API）和 TagFilter（调用标签筛选 API）
@@ -148,7 +148,7 @@
     - 生成随机标签选择，验证列表仅包含对应标签凭证
     - **验证需求: 3.5**
 
-  - [ ] 5.5 实现 PasswordField 组件（密码显示 + 30 秒自动掩码）
+  - [x] 5.5 实现 PasswordField 组件（密码显示 + 30 秒自动掩码）
     - 创建 `src/renderer/components/PasswordField.tsx`
     - 默认掩码显示，点击"显示"调用 reveal API 获取明文
     - 30 秒后自动恢复掩码
@@ -160,7 +160,7 @@
     - 生成随机密码，验证显示后 30 秒自动恢复掩码
     - **验证需求: 4.3, 7.3**
 
-  - [ ] 5.7 实现 CredentialDetailPage（凭证详情/编辑）
+  - [x] 5.7 实现 CredentialDetailPage（凭证详情/编辑）
     - 创建 `src/renderer/pages/CredentialDetailPage.tsx`
     - 调用 `GET /api/credentials/{id}` 获取详情
     - 集成 PasswordField 组件
@@ -171,7 +171,7 @@
     - 提供"密码历史"入口
     - _需求: 4.1, 4.2, 4.3, 4.4, 4.5, 4.6, 4.7, 4.8, 4.9, 4.10_
 
-  - [ ] 5.8 实现 CreateCredentialPage（凭证创建）
+  - [x] 5.8 实现 CreateCredentialPage（凭证创建）
     - 创建 `src/renderer/pages/CreateCredentialPage.tsx`
     - 包含必填字段（账户名称、用户名、密码）和可选字段（URL、备注、标签）
     - 提供"自动生成密码"开关
