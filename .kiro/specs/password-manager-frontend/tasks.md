@@ -262,8 +262,8 @@
     - 生成随机数值，验证 1-60 分钟范围内接受，超出范围拒绝
     - **验证需求: 10.2**
 
-- [ ] 9. 实现 Electron 主进程功能（对应后端 Task 13.6）
-  - [ ] 9.1 实现 ClipboardManager（剪贴板管理）
+- [x] 9. 实现 Electron 主进程功能（对应后端 Task 13.6）
+  - [x] 9.1 实现 ClipboardManager（剪贴板管理）
     - 创建 `src/main/clipboard-manager.ts`
     - 通过 IPC 接收复制请求，写入系统剪贴板
     - 启动 60 秒倒计时，到期清除剪贴板
@@ -275,13 +275,13 @@
     - 生成随机密码，验证写入剪贴板后 60 秒清除，新请求重置计时
     - **验证需求: 4.4, 7.4, 11.2, 11.3, 11.4**
 
-  - [ ] 9.3 实现 AutoLockManager（自动锁定检测）
+  - [x] 9.3 实现 AutoLockManager（自动锁定检测）
     - 创建 `src/main/auto-lock.ts`
     - 监听用户操作事件（鼠标移动、键盘输入）
     - 无操作超过设定时间后通过 IPC 通知 Renderer 执行锁定
     - _需求: 11.5_
 
-  - [ ] 9.4 实现 IPC Handlers 和 Renderer Hooks
+  - [x] 9.4 实现 IPC Handlers 和 Renderer Hooks
     - 创建 `src/main/ipc-handlers.ts`，注册所有 IPC 通道处理器
     - 创建 `src/renderer/hooks/useAutoLock.ts`，监听锁定事件并清除状态
     - 创建 `src/renderer/hooks/useClipboard.ts`，封装剪贴板复制调用

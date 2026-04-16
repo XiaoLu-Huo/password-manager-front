@@ -1,5 +1,6 @@
 import { app, BrowserWindow } from 'electron';
 import * as path from 'path';
+import { registerAllIpcHandlers } from './ipc-handlers';
 
 let mainWindow: BrowserWindow | null = null;
 
@@ -18,6 +19,8 @@ function createWindow(): void {
       sandbox: true,
     },
   });
+
+  registerAllIpcHandlers(mainWindow);
 
   if (process.env.NODE_ENV === 'development' || !app.isPackaged) {
     mainWindow.loadURL(DEV_SERVER_URL);
