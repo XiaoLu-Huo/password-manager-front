@@ -29,8 +29,8 @@ const UnlockPage: React.FC = () => {
 
       if (result.mfaRequired) {
         setMfaRequired(true);
-      } else if (result.sessionToken) {
-        unlock(result.sessionToken);
+      } else {
+        unlock(result.sessionToken || 'authenticated');
         navigate(redirectTo, { replace: true });
       }
     } catch (err: unknown) {
@@ -48,10 +48,8 @@ const UnlockPage: React.FC = () => {
       const body: VerifyTotpRequest = { totpCode };
       const result = await apiClient.post<UnlockResultResponse>('/auth/verify-totp', body);
 
-      if (result.sessionToken) {
-        unlock(result.sessionToken);
-        navigate(redirectTo, { replace: true });
-      }
+      unlock(result.sessionToken || 'authenticated');
+      navigate(redirectTo, { replace: true });
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'TOTP 验证失败');
     } finally {
