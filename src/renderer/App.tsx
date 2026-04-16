@@ -20,11 +20,9 @@ import VaultPage from './pages/VaultPage';
 import CredentialDetailPage from './pages/CredentialDetailPage';
 import CreateCredentialPage from './pages/CreateCredentialPage';
 import PasswordGeneratorPage from './pages/PasswordGeneratorPage';
-
-// ---- Placeholder pages (replaced by real implementations in later tasks) ----
-const SecurityReportPage: React.FC = () => <div>SecurityReportPage</div>;
-const ImportExportPage: React.FC = () => <div>ImportExportPage</div>;
-const SettingsPage: React.FC = () => <div>SettingsPage</div>;
+import SecurityReportPage from './pages/SecurityReportPage';
+import ImportExportPage from './pages/ImportExportPage';
+import SettingsPage from './pages/SettingsPage';
 
 // ---- Route guard: redirects to /unlock (or /setup) when locked ----
 

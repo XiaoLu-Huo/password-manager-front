@@ -214,8 +214,8 @@
     - 生成随机密码规则，验证选择后表单自动填充所有参数
     - **验证需求: 6.8**
 
-- [ ] 8. 实现密码历史、安全报告、导入导出、设置页面（对应后端 Task 13.5）
-  - [ ] 8.1 实现 PasswordHistoryPanel（密码历史面板）
+- [x] 8. 实现密码历史、安全报告、导入导出、设置页面（对应后端 Task 13.5）
+  - [x] 8.1 实现 PasswordHistoryPanel（密码历史面板）
     - 创建 `src/renderer/components/PasswordHistoryPanel.tsx`
     - 调用 `GET /api/credentials/{id}/password-history` 获取历史列表
     - 按变更时间倒序展示，每条显示掩码密码和变更时间
@@ -228,7 +228,7 @@
     - 生成随机历史记录列表，验证按变更时间降序排列，每条包含掩码密码和变更时间
     - **验证需求: 7.1, 7.2**
 
-  - [ ] 8.3 实现 SecurityReportPage（安全报告）
+  - [x] 8.3 实现 SecurityReportPage（安全报告）
     - 创建 `src/renderer/pages/SecurityReportPage.tsx`
     - 调用 `GET /api/security-report` 展示统计概览（卡片形式）
     - 实现"弱密码"、"重复密码"、"超期未更新"三个分类标签页
@@ -236,7 +236,7 @@
     - 点击凭证跳转到详情页
     - _需求: 8.1, 8.2, 8.3, 8.4, 8.5, 8.6, 8.7_
 
-  - [ ] 8.4 实现 ImportExportPage（导入导出）
+  - [x] 8.4 实现 ImportExportPage（导入导出）
     - 创建 `src/renderer/pages/ImportExportPage.tsx`
     - 导出区域：输入加密密码 → 调用导出 API → Electron 文件保存对话框
     - 导入区域：Electron 文件选择对话框 → 输入文件密码 + 冲突策略 → 调用导入 API
@@ -249,7 +249,7 @@
     - 生成随机导入结果，验证各数量之和与总数量一致
     - **验证需求: 9.7**
 
-  - [ ] 8.6 实现 SettingsPage（设置）
+  - [x] 8.6 实现 SettingsPage（设置）
     - 创建 `src/renderer/pages/SettingsPage.tsx`
     - 调用 `GET /api/settings` 获取当前设置
     - 自动锁定超时配置（1-60 分钟输入框）
