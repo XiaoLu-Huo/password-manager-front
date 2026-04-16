@@ -7,7 +7,7 @@ import { colors, cardStyle, secondaryBtnStyle } from '../theme';
 import type { SecurityReportResponse, CredentialListResponse } from '../types';
 import { AuthExpiredError } from '../types';
 
-type TabKey = 'weak' | 'duplicate' | 'expired';
+type TabKey = 'weak' | 'medium' | 'duplicate' | 'expired';
 
 interface TabDef {
   key: TabKey;
@@ -16,7 +16,8 @@ interface TabDef {
 }
 
 const TABS: TabDef[] = [
-  { key: 'weak', label: '弱密码', apiPath: '/security-report/weak' },
+  { key: 'weak', label: '弱密码', apiPath: '/security-report/strength/WEAK' },
+  { key: 'medium', label: '中等密码', apiPath: '/security-report/strength/MEDIUM' },
   { key: 'duplicate', label: '重复密码', apiPath: '/security-report/duplicate' },
   { key: 'expired', label: '超期未更新', apiPath: '/security-report/expired' },
 ];
@@ -91,6 +92,7 @@ const SecurityReportPage: React.FC = () => {
   const statsCards: { label: string; value: number; warn?: boolean }[] = [
     { label: '总凭证数', value: report.totalCredentials },
     { label: '弱密码', value: report.weakPasswordCount, warn: true },
+    { label: '中等密码', value: report.mediumPasswordCount, warn: true },
     { label: '重复密码', value: report.duplicatePasswordCount, warn: true },
     { label: '超期未更新', value: report.expiredPasswordCount, warn: true },
   ];

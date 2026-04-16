@@ -8,4 +8,5 @@ export interface UpdateSettingsRequest {
 
 export interface SettingsResponse {
   autoLockMinutes: number;
+  mfaEnabled: boolean;
 }

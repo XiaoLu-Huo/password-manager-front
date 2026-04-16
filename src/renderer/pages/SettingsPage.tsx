@@ -22,7 +22,6 @@ const SettingsPage: React.FC = () => {
   const { lock } = useAuth();
 
   // ---- Auto-lock state ----
-  const [autoLockMinutes, setAutoLockMinutes] = useState<number>(5);
   const [autoLockInput, setAutoLockInput] = useState<string>('5');
   const [autoLockError, setAutoLockError] = useState('');
   const [autoLockSuccess, setAutoLockSuccess] = useState('');
@@ -44,8 +43,8 @@ const SettingsPage: React.FC = () => {
       .get<SettingsResponse>('/settings')
       .then((data) => {
         if (!cancelled) {
-          setAutoLockMinutes(data.autoLockMinutes);
           setAutoLockInput(String(data.autoLockMinutes));
+          setMfaEnabled(data.mfaEnabled);
         }
       })
       .catch(() => {
@@ -69,7 +68,6 @@ const SettingsPage: React.FC = () => {
     showLoading();
     try {
       await apiClient.put<void>('/settings', { autoLockMinutes: value });
-      setAutoLockMinutes(value);
       setAutoLockSuccess('自动锁定时间已更新');
     } catch (err: unknown) {
       setAutoLockError(err instanceof Error ? err.message : '保存失败');
@@ -241,28 +239,29 @@ const SettingsPage: React.FC = () => {
           </>
         )}
 
-        {/* Setup step: show QR code URI */}
+        {/* Setup step: show QR code */}
         {mfaStep === 'setup' && mfaSetupData && (
           <div>
             <p style={{ fontSize: 14, color: colors.textPrimary, margin: '0 0 12px' }}>
-              请使用身份验证器应用（如 Google Authenticator）扫描以下链接或手动输入：
+              请使用身份验证器应用（如 Google Authenticator）扫描下方二维码：
             </p>
             <div
               style={{
-                padding: 12,
+                display: 'flex',
+                justifyContent: 'center',
+                padding: 16,
                 backgroundColor: colors.inputBg,
                 border: `1px solid ${colors.border}`,
                 borderRadius: 8,
                 marginBottom: 16,
-                wordBreak: 'break-all',
-                fontSize: 13,
-                color: colors.textPrimary,
-                fontFamily: 'monospace',
-                userSelect: 'all',
               }}
               data-testid="mfa-uri"
             >
-              {mfaSetupData.qrCodeUri}
+              <img
+                src={mfaSetupData.qrCodeUri}
+                alt="MFA 二维码"
+                style={{ width: 200, height: 200 }}
+              />
             </div>
 
             <div style={{ marginBottom: 16 }}>
