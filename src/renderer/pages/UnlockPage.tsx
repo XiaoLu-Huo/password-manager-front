@@ -28,7 +28,7 @@ const UnlockPage: React.FC = () => {
       const body: UnlockVaultRequest = { masterPassword: password };
       const result = await apiClient.post<UnlockResultResponse>('/auth/unlock', body);
       if (result.mfaRequired) { setMfaRequired(true); }
-      else { unlock(result.sessionToken || 'authenticated'); navigate(redirectTo, { replace: true }); }
+      else { unlock(result.sessionToken!); navigate(redirectTo, { replace: true }); }
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : '解锁失败');
     } finally { hideLoading(); }
@@ -41,7 +41,7 @@ const UnlockPage: React.FC = () => {
     try {
       const body: VerifyTotpRequest = { totpCode };
       const result = await apiClient.post<UnlockResultResponse>('/auth/verify-totp', body);
-      unlock(result.sessionToken || 'authenticated');
+      unlock(result.sessionToken!);
       navigate(redirectTo, { replace: true });
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'TOTP 验证失败');

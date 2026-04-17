@@ -6,7 +6,7 @@
 
 ## 任务
 
-- [ ] 1. 初始化 Electron + React + TypeScript 项目（对应后端 Task 13.1）
+- [x] 1. 初始化 Electron + React + TypeScript 项目（对应后端 Task 13.1）
   - [x] 1.1 创建项目目录结构与基础配置
     - 在工作区根目录（与 password-manager/ 平级）创建前端项目目录
     - 初始化 package.json，安装 Electron、React、TypeScript、Vite 依赖
@@ -50,7 +50,7 @@
     - 配置安全选项：`nodeIntegration: false`、`contextIsolation: true`
     - _需求: 1.1, 1.3_
 
-- [ ] 2. 实现状态管理与路由框架
+- [x] 2. 实现状态管理与路由框架
   - [x] 2.1 实现认证状态管理（AuthContext）
     - 创建 `src/renderer/context/AuthContext.tsx`
     - 实现 `AuthState`（isUnlocked、sessionToken、mfaRequired）和 `AuthAction` reducer
@@ -295,15 +295,15 @@
 - [x] 10. 检查点 - 确保 Electron 桌面应用所有模块测试通过
   - 确保所有测试通过，如有问题请向用户确认。
 
-- [ ] 11. 搭建 Chrome Extension 浏览器插件（对应后端 Task 14.1）
-  - [ ] 11.1 初始化 Chrome Extension Manifest V3 项目
+- [x] 11. 搭建 Chrome Extension 浏览器插件（对应后端 Task 14.1）
+  - [x] 11.1 初始化 Chrome Extension Manifest V3 项目
     - 在工作区根目录创建 Chrome Extension 项目目录
     - 创建 `manifest.json`（Manifest V3 配置）
     - 创建 `service-worker.ts`（后台服务，API 请求代理，管理 Session Token）
     - 创建 `api-client.ts`（与后端通信的 HTTP 客户端）
     - _需求: 13.1, 13.7_
 
-  - [ ] 11.2 实现 Content Script（登录表单检测）
+  - [x] 11.2 实现 Content Script（登录表单检测）
     - 创建 `content-script.ts`
     - 检测页面 `input[type="password"]` 元素，提取页面 URL
     - 检测到登录表单时发送消息给 Service Worker
@@ -314,14 +314,14 @@
     - 生成随机 HTML 片段，验证包含 password input 时检测到，不包含时不触发
     - **验证需求: 13.4**
 
-- [ ] 12. 实现 Chrome Extension 核心功能（对应后端 Task 14.2）
-  - [ ] 12.1 实现 Popup 和 QuickSearch 组件
+- [x] 12. 实现 Chrome Extension 核心功能（对应后端 Task 14.2）
+  - [x] 12.1 实现 Popup 和 QuickSearch 组件
     - 创建 `Popup.tsx`（弹出窗口主界面）
     - 创建 `QuickSearch.tsx`（快速搜索框，调用搜索 API）
     - Vault 锁定时显示"请先在桌面应用中解锁密码库"提示
     - _需求: 13.2, 13.8_
 
-  - [ ] 12.2 实现 AutoFillPrompt 和自动填充功能
+  - [x] 12.2 实现 AutoFillPrompt 和自动填充功能
     - 创建 `AutoFillPrompt.tsx`（自动填充提示组件）
     - 根据页面 URL 匹配凭证，显示填充提示
     - 用户选择凭证后将用户名和密码填入表单字段
@@ -333,22 +333,22 @@
     - 生成随机凭证和表单，验证用户名填入 username 字段，密码填入 password 字段
     - **验证需求: 13.3, 13.5, 13.6**
 
-- [ ] 13. 检查点 - 确保 Chrome Extension 测试通过
+- [x] 13. 检查点 - 确保 Chrome Extension 测试通过
   - 确保所有测试通过，如有问题请向用户确认。
 
-- [ ] 14. 前后端集成联调（对应后端 Task 15.1）
-  - [ ] 14.1 配置后端 CORS 和会话拦截器
+- [x] 14. 前后端集成联调（对应后端 Task 15.1）
+  - [x] 14.1 配置后端 CORS 和会话拦截器
     - 创建或更新 `CorsConfig.java`，允许 Desktop App 和 Chrome Extension 请求来源
     - 配置 `SecurityConfig.java` 会话拦截器，对除 setup/unlock 外的 API 验证 Session Token
     - _需求: 14.1, 14.2_
 
-  - [ ] 14.2 验证 Electron 应用与后端 API 通信
+  - [x] 14.2 验证 Electron 应用与后端 API 通信
     - 确保所有 API Client 方法与后端端点正确对接
     - 验证 Session Token 认证流程端到端正常
     - 验证 401 响应自动跳转到 UnlockPage
     - _需求: 14.3, 14.4_
 
-  - [ ] 14.3 验证 Chrome Extension 与后端 API 通信
+  - [x] 14.3 验证 Chrome Extension 与后端 API 通信
     - 确保 Service Worker API 代理正常工作
     - 验证 Content Script → Service Worker → Backend 通信链路
     - _需求: 14.1_
