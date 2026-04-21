@@ -2,7 +2,10 @@ import { BrowserWindow, dialog, ipcMain } from 'electron';
 import { registerClipboardHandlers } from './clipboard-manager';
 import { registerAutoLockHandlers } from './auto-lock';
 
-import type { FileFilter } from '../preload/preload';
+interface FileFilter {
+  name: string;
+  extensions: string[];
+}
 
 /**
  * Registers all IPC channel handlers.
