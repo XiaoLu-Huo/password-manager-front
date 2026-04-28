@@ -1,5 +1,16 @@
 // ---- Auth request DTOs ----
 
+export interface RegisterRequest {
+  username: string;
+  email: string;
+  masterPassword: string;
+}
+
+export interface LoginRequest {
+  identifier: string; // 用户名或邮箱
+  masterPassword: string;
+}
+
 export interface CreateMasterPasswordRequest {
   masterPassword: string;
 }

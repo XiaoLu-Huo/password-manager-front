@@ -62,8 +62,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const lock = useCallback(() => {
     apiClient.setSessionToken(null);
     dispatch({ type: 'LOCK' });
-    // Force navigation to unlock page — works with HashRouter
-    window.location.hash = '#/unlock';
+    // Force navigation to login page — works with HashRouter
+    window.location.hash = '#/login';
   }, []);
 
   // Register the lock handler so 401 responses auto-lock the app

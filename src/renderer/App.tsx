@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
   HashRouter,
   Routes,
@@ -9,13 +9,11 @@ import {
 } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { LoadingProvider } from './context/LoadingContext';
-import { useLoading } from './context/LoadingContext';
-import { apiClient } from './api/api-client';
 import AppLayout from './components/AppLayout';
 import LoadingSpinner from './components/LoadingSpinner';
 
-import SetupPage from './pages/SetupPage';
-import UnlockPage from './pages/UnlockPage';
+import RegisterPage from './pages/RegisterPage';
+import LoginPage from './pages/LoginPage';
 import VaultPage from './pages/VaultPage';
 import CredentialDetailPage from './pages/CredentialDetailPage';
 import CreateCredentialPage from './pages/CreateCredentialPage';
@@ -28,22 +26,22 @@ import SettingsPage from './pages/SettingsPage';
 
 /**
  * Wraps protected routes. If the vault is locked the user is sent to
- * /unlock (or /setup when no master password has been configured yet).
+ * /login when not authenticated.
  */
 const ProtectedRoute: React.FC = () => {
   const { isUnlocked } = useAuth();
   const location = useLocation();
 
   if (!isUnlocked) {
-    // Preserve the intended destination so we can redirect back after unlock
-    return <Navigate to="/unlock" state={{ from: location }} replace />;
+    // Preserve the intended destination so we can redirect back after login
+    return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
   return <Outlet />;
 };
 
 /**
- * Wraps public auth routes (/setup, /unlock). If the vault is already
+ * Wraps public auth routes (/register, /login). If the vault is already
  * unlocked, redirect straight to /vault so users don't see the auth
  * screens unnecessarily.
  */
@@ -60,37 +58,10 @@ const PublicRoute: React.FC<{ children: React.ReactElement }> = ({ children }) =
 // ---- Setup check: determines whether master password exists ----
 
 /**
- * On first load we need to know whether the backend already has a master
- * password configured. If not, redirect to /setup instead of /unlock.
+ * On first load, always redirect to /login (multi-user: no setup flow).
  */
 const SetupRedirect: React.FC = () => {
-  const [needsSetup, setNeedsSetup] = useState<boolean | null>(null);
-  const { showLoading, hideLoading } = useLoading();
-
-  useEffect(() => {
-    let cancelled = false;
-    showLoading();
-    apiClient
-      .get<boolean>('/auth/status')
-      .then((initialized) => {
-        if (!cancelled) setNeedsSetup(!initialized);
-      })
-      .catch(() => {
-        if (!cancelled) setNeedsSetup(false);
-      })
-      .finally(() => {
-        // Always hide loading regardless of cancelled — otherwise the
-        // spinner stays visible after Navigate unmounts this component.
-        hideLoading();
-      });
-    return () => { cancelled = true; };
-  }, [showLoading, hideLoading]);
-
-  if (needsSetup === null) {
-    return null;
-  }
-
-  return <Navigate to={needsSetup ? '/setup' : '/unlock'} replace />;
+  return <Navigate to="/login" replace />;
 };
 
 // ---- App root ----
@@ -103,18 +74,18 @@ const AppRoutes: React.FC = () => {
 
       {/* Public auth routes */}
       <Route
-        path="/setup"
+        path="/register"
         element={
           <PublicRoute>
-            <SetupPage />
+            <RegisterPage />
           </PublicRoute>
         }
       />
       <Route
-        path="/unlock"
+        path="/login"
         element={
           <PublicRoute>
-            <UnlockPage />
+            <LoginPage />
           </PublicRoute>
         }
       />
